@@ -10,17 +10,17 @@ use DBIx::TextTableAny;
 sub import {
     my $class = shift;
 
-    $DBIx::TextTableAny::opts = {
+    %DBIx::TextTableAny::opts = (
         @_,
         backend => 'Text::Table::CSV',
-    };
+    );
 }
 
 package
     DBI::db;
 
 sub selectrow_csv { goto &selectrow_texttable }
-sub selectall_csv { goto &selectrow_texttable }
+sub selectall_csv { goto &selectall_texttable }
 
 package
     DBI::st;
@@ -101,3 +101,6 @@ query.
 L<DBI::Format>, particularly L<DBI::Format::CSV>
 
 L<DBIx::CSVDumper>
+
+L<DBIx::TextTableAny> which has a similar interface as this module and offers
+multiple output formats.
