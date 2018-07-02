@@ -19,14 +19,18 @@ sub import {
 package
     DBI::db;
 
-sub selectrow_csv { goto &selectrow_texttable }
-sub selectall_csv { goto &selectall_texttable }
+sub selectrow_csv          { local %DBIx::TextTableAny::opts = (backend => 'Text::Table::CSV', header_row => 1); &selectrow_texttable(@_) }
+sub selectall_csv          { local %DBIx::TextTableAny::opts = (backend => 'Text::Table::CSV', header_row => 1); &selectall_texttable(@_) }
+sub selectrow_csv_noheader { local %DBIx::TextTableAny::opts = (backend => 'Text::Table::CSV', header_row => 0); &selectrow_texttable(@_) }
+sub selectall_csv_noheader { local %DBIx::TextTableAny::opts = (backend => 'Text::Table::CSV', header_row => 0); &selectall_texttable(@_) }
 
 package
     DBI::st;
 
-sub fetchrow_csv { goto &fetchrow_texttable }
-sub fetchall_csv { goto &fetchall_texttable }
+sub fetchrow_csv          { local %DBIx::TextTableAny::opts = (backend => 'Text::Table::CSV', header_row => 1); &fetchrow_texttable(@_) }
+sub fetchall_csv          { local %DBIx::TextTableAny::opts = (backend => 'Text::Table::CSV', header_row => 1); &fetchall_texttable(@_) }
+sub fetchrow_csv_noheader { local %DBIx::TextTableAny::opts = (backend => 'Text::Table::CSV', header_row => 0); &fetchrow_texttable(@_) }
+sub fetchall_csv_noheader { local %DBIx::TextTableAny::opts = (backend => 'Text::Table::CSV', header_row => 0); &fetchall_texttable(@_) }
 
 1;
 # ABSTRACT: Generate CSV from SQL query result
@@ -39,16 +43,16 @@ sub fetchall_csv { goto &fetchall_texttable }
  use DBIx::CSV;
  my $dbh = DBI->connect("dbi:mysql:database=mydb", "someuser", "somepass");
 
-Selecting a row:
+Generating a row of CSV (with header):
 
  print $dbh->selectrow_csv("SELECT * FROM member");
 
-Sample result (default backend is L<Text::Table::Tiny>):
+Sample result:
 
  "Name","Rank","Serial"
  "alice","pvt","123456"
 
-Selecting all rows:
+Generating all rows (with header):
 
  print $dbh->selectrow_csv("SELECT * FROM member");
 
@@ -59,14 +63,12 @@ Sample result:
  "bob","cpl","98765321"
  "carol","brig gen","8745"
 
-Setting other options:
-
- DBIx::CSV->import(header_row => 0);
+Generating rows (without header):
 
  my $sth = $dbh->prepare("SELECT * FROM member");
  $sth->execute;
 
- print $sth->fetchall_csv;
+ print $sth->fetchall_csv_noheader;
 
 Sample result:
 
@@ -83,11 +85,15 @@ database handle:
 
  selectrow_csv
  selectall_csv
+ selectrow_csv_noheader
+ selectall_csv_noheader
 
 as well as the following methods to statement handle:
 
  fetchrow_csv
  fetchall_csv
+ fetchrow_csv_noheader
+ fetchall_csv_noheader
 
 The methods send the result of query to Text::Table::Any (using the
 L<Text::Table::CSV> backend) and return the rendered CSV data.
