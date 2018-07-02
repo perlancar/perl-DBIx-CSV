@@ -52,6 +52,14 @@ Sample result:
  "Name","Rank","Serial"
  "alice","pvt","123456"
 
+Generating a row of CSV (without header):
+
+ print $dbh->selectrow_csv_noheader("SELECT * FROM member");
+
+Sample result:
+
+ "alice","pvt","123456"
+
 Generating all rows (with header):
 
  print $dbh->selectrow_csv("SELECT * FROM member");
@@ -63,18 +71,16 @@ Sample result:
  "bob","cpl","98765321"
  "carol","brig gen","8745"
 
-Generating rows (without header):
+Generating all rows (without header):
 
- my $sth = $dbh->prepare("SELECT * FROM member");
- $sth->execute;
+ print $dbh->selectrow_csv("SELECT * FROM member");
 
+Statement handle versions:
+
+ print $sth->fetchrow_csv;
+ print $sth->fetchrow_csv_noheader;
+ print $sth->fetchall_csv;
  print $sth->fetchall_csv_noheader;
-
-Sample result:
-
- "alice","pvt","123456"
- "bob","cpl","98765321"
- "carol,"brig gen","8745"
 
 
 =head1 DESCRIPTION
