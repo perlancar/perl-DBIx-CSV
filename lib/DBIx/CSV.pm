@@ -62,7 +62,7 @@ Sample result:
 
 Generating all rows (with header):
 
- print $dbh->selectrow_csv("SELECT * FROM member");
+ print $dbh->selectall_csv("SELECT * FROM member");
 
 Sample result:
 
@@ -73,7 +73,7 @@ Sample result:
 
 Generating all rows (without header):
 
- print $dbh->selectrow_csv("SELECT * FROM member");
+ print $dbh->selectall_csv_noheader("SELECT * FROM member");
 
 Statement handle versions:
 
