@@ -1,6 +1,6 @@
 0.004   2018-12-07 (PERLANCAR)
 
-        - Add missing dependency (thanks Nick Tonkin).
+        - Add missing dependency to Text::Table::CSV (thanks Nick Tonkin).
 
 
 0.003   2018-07-03 (PERLANCAR)
