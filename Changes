@@ -1,20 +1,20 @@
-0.004   2018-12-07 (PERLANCAR)
+0.004   2018-12-07  Released-By: PERLANCAR
 
         - Add missing dependency to Text::Table::CSV (thanks Nick Tonkin).
 
 
-0.003   2018-07-03 (PERLANCAR)
+0.003   2018-07-03  Released-By: PERLANCAR
 
 	- No functional changes.
 
 	- [doc] Fix example in Synopsis [RT#125743].
 
 
-0.002   2018-07-02 (PERLANCAR)
+0.002   2018-07-02  Released-By: PERLANCAR
 
 	- Add {select,fetch}{all,row}_csv_noheader methods.
 
 
-0.001   2018-07-01 (PERLANCAR)
+0.001   2018-07-01  Released-By: PERLANCAR
 
         - First release.
